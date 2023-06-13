@@ -22,7 +22,8 @@ with open("3.txt") as f3:
     y3 = f3.read()
 with open("4.txt") as f4:
     y4 = f4.read()
-
+with open("all.txt") as f5:
+    yall = f5.read()
 
 # source_chunks = []
 # splitter = CharacterTextSplitter(separator=" ", chunk_size=1024, chunk_overlap=0)
@@ -39,17 +40,17 @@ splitter = RecursiveCharacterTextSplitter(
     )
 # documents = loader.load()
 # texts = splitter.split_documents(documents) 
-texts = splitter.split_text(y2)
+texts = splitter.split_text(yall)
 
 embeddings = OpenAIEmbeddings()
 
 docsearch = Chroma.from_texts(texts, embeddings)
 
 qa = RetrievalQA.from_chain_type(
-    llm=OpenAI(temperature=0.6), 
+    llm=OpenAI(temperature=1), 
     chain_type="map_reduce", retriever=docsearch.as_retriever())
 
-query = "What is the most thought-provoking idea in this text?"
+query = "what is the most profound assertion made in this text?"
 print(qa.run(query))
 
 

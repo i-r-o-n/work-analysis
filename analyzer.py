@@ -13,8 +13,8 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain.document_loaders import TextLoader
 
-# with open("1.txt") as f1:
-#     y1 = f1.read()
+with open("1.txt") as f1:
+    y1 = f1.read()
 # with open("2.txt") as f2:
 #     y2 = f2.read()
 # with open("3.txt") as f3:
@@ -30,10 +30,11 @@ from langchain.document_loaders import TextLoader
 #     source_chunks.append(Document(page_content=chunk))
 
 # search_index = Chroma.from_documents(source_chunks, OpenAIEmbeddings())
-loader = TextLoader("1.txt")
+# loader = TextLoader("1.txt")
 splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
-documents = loader.load()
-texts = splitter.split_documents(documents)
+# documents = loader.load()
+# texts = splitter.split_documents(documents) 
+texts = splitter.split_text(y1)
 
 embeddings = OpenAIEmbeddings()
 

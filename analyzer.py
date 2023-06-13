@@ -9,18 +9,19 @@ from langchain.docstore.document import Document
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain.document_loaders import TextLoader
 
 with open("1.txt") as f1:
     y1 = f1.read()
-# with open("2.txt") as f2:
-#     y2 = f2.read()
-# with open("3.txt") as f3:
-#     y3 = f3.read()
-# with open("4.txt") as f4:
-#     y4 = f4.read()
+with open("2.txt") as f2:
+    y2 = f2.read()
+with open("3.txt") as f3:
+    y3 = f3.read()
+with open("4.txt") as f4:
+    y4 = f4.read()
 
 
 # source_chunks = []
@@ -31,20 +32,24 @@ with open("1.txt") as f1:
 
 # search_index = Chroma.from_documents(source_chunks, OpenAIEmbeddings())
 # loader = TextLoader("1.txt")
-splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+# splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]
+    )
 # documents = loader.load()
 # texts = splitter.split_documents(documents) 
-texts = splitter.split_text(y1)
+texts = splitter.split_text(y2)
 
 embeddings = OpenAIEmbeddings()
 
 docsearch = Chroma.from_texts(texts, embeddings)
 
 qa = RetrievalQA.from_chain_type(
-    llm=OpenAI(temperature=0.5), 
-    chain_type="stuff", retriever=docsearch.as_retriever())
+    llm=OpenAI(temperature=0.6), 
+    chain_type="map_reduce", retriever=docsearch.as_retriever())
 
-query = "What was the most interesting idea from the DTS freshman?"
-qa.run(query)
+query = "What is the most thought-provoking idea in this text?"
+print(qa.run(query))
 
 

@@ -23,6 +23,24 @@ def temperature_sanitizer(temperature: str) -> float:
     # how strictly you want the model to adhere to the query
 # don't do model picker, just use one model
 # 
-"test"
-st.write("School Work Showcase")
+
+st.write("# School Work Showcase")
+temperature_selection = st.slider("creavitity")
+st.write("temperature is", temperature_selection)
+
+dataset_options = [
+    "all years",
+    "freshman",
+    "sophomore",
+    "junior",
+    "senior"
+]
+dataset_selection = st.selectbox(
+    "Which school year would you like to look at?",
+    dataset_options
+)
+
+st.text_input("What would you like to know?", key="query")
+
+st.session_state.query
 

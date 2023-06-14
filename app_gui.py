@@ -35,7 +35,7 @@ def parse_dataset(dataset_selection: str) -> Dataset:
 def get_dummy_response() -> str:
     # wait time to simulate long query
     time.sleep(3)
-    return "temporary dummy response " + str(random.randrange(1000))
+    return "dummy response " + str(random.randrange(1000))
 
 
 
@@ -90,6 +90,13 @@ with query_tab:
             def get_response(response_pipe: Pipe) -> None:
                 # input response function here \/
                 response_pipe.send(get_dummy_response())
+                # state check
+                if accepting_responses:
+                    response_pipe.send(make_query(
+                        query=st.session_state.query,
+                        dataset=parse_dataset(dataset_selection),
+                        temperature=get_scaled_temperature(temperature_selection),
+                    ))
 
             response_process = Process(
                 target=get_response, 
@@ -104,13 +111,6 @@ with query_tab:
 
             response_box.code(response)
             
-            dataset = parse_dataset(dataset_selection)
-            if accepting_responses:
-                response = make_query(
-                    query=st.session_state.query,
-                    dataset=dataset,
-                    temperature=get_scaled_temperature(temperature_selection),
-                )
             write_output(Entry(
                 dataset,
                 get_scaled_temperature(temperature_selection),

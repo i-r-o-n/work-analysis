@@ -3,7 +3,7 @@ import random
 import time
 import pandas as pd
 import streamlit as st
-from multiprocessing import Process, Value
+from multiprocessing import Process, Pipe
 
 from utils.data_types import Dataset 
 from utils.text_analyzer import Defaults, make_query
@@ -32,10 +32,11 @@ def parse_dataset(dataset_selection: str) -> Dataset:
     return Dataset(dataset_options.index(dataset_selection))
 
 
-def get_dummy_response(response: str) -> str:
+def get_dummy_response(response_pipe: Pipe) -> str:
     # wait time to simulate long query
     time.sleep(3)
-    response.value = "temporary dummy response " + str(random.randrange(1000))
+    response = "temporary dummy response " + str(random.randrange(1000))
+    response_pipe.send(response)
     return response
 
 
@@ -83,20 +84,20 @@ with query_tab:
 
         if generated:
             
-            response_box.text(wait_info)
+            response_box.code(wait_info)
             
-            response_passed = Value("str","")
+            connection = Pipe()
 
-            response_process = Process(target=get_dummy_response, args=(response_passed,))
+            response_process = Process(target=get_dummy_response, args=(connection,))
             response_process.start()
             while response_process.is_alive():
                 wait_info = do_wait_info_dots(wait_info)
-                response_box = st.code(wait_info)
+                response_box.code(wait_info)
 
             response_process.join()
-            response = response_passed.value
+            response = connection.recv()
 
-            response_box = st.code(response_value.value)
+            response_box.code(response_value.value)
             
             dataset = parse_dataset(dataset_selection)
             if accepting_responses:

@@ -1,11 +1,12 @@
 import os
-import json
+import streamlit as st
 
 from enum import Enum
 from typing import NewType
 
 # load api secrets
-key = json.load(open("key.json"))["api key"]
+print(st.secrets.api_key)
+key = st.secrets.api_key
 os.environ["OPENAI_API_KEY"] = key
 
 from langchain.llms import OpenAI

@@ -39,7 +39,7 @@ def get_dummy_response(response: str) -> str:
     return response
 
 def do_wait_info_dots(current_wait_info: str) -> str:
-    time.sleep(1)
+    time.sleep(0.5)
     return current_wait_info + '.'
 
 
@@ -86,6 +86,7 @@ with query_tab:
             while response_process.is_alive():
                 wait_info = do_wait_info_dots(wait_info)
                 thinking.text(wait_info)
+            thinking.text("")
             #response_process.join()
             
             dataset = parse_dataset(dataset_selection)

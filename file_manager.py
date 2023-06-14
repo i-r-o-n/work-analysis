@@ -1,6 +1,6 @@
 from typing import NewType, Self
 
-from analyzer import Datasets, ModelTypes, Dataset, Model
+from analyzer import Dataset, Model
 
 OUTPUT_FILE = "responses.csv"
 

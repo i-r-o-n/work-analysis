@@ -25,7 +25,9 @@ def temperature_sanitizer(temperature: str) -> float:
 # 
 
 st.write("# School Work Showcase")
-temperature_selection = st.slider("creavitity")
+
+st.write("### Creativity")
+temperature_selection = st.slider("temperature")
 st.write("temperature is", temperature_selection)
 
 dataset_options = [
@@ -36,7 +38,7 @@ dataset_options = [
     "senior"
 ]
 dataset_selection = st.selectbox(
-    "Which school year would you like to look at?",
+    "## Which school year would you like to look at?",
     dataset_options
 )
 

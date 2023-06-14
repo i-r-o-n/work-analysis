@@ -4,7 +4,7 @@ import streamlit as st
 from enum import Enum
 from typing import NewType
 
-import file_manager
+from utils import file_manager
 
 # load api secrets
 key = st.secrets.api_key

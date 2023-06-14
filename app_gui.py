@@ -41,6 +41,7 @@ def get_dummy_response() -> str:
 query_tab, database_tab = st.tabs(["Query", "Database"])
 
 response = "Ask me a question..."
+thinking = False
 accepting_responses = False
 
 with query_tab:
@@ -71,7 +72,9 @@ with query_tab:
 
         generated = st.form_submit_button("Generate response")
         if generated:
+            thinking = True
             response = get_dummy_response()
+            thinking = False
             dataset = parse_dataset(dataset_selection)
             if accepting_responses:
                 response = make_query(
@@ -85,7 +88,8 @@ with query_tab:
                 Defaults.model,
                 st.session_state.query,
                 response).parse_to_csv())
-
+    
+        if thinking: st.write("Thinking...")
         
     st.code(response)
 

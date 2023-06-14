@@ -79,7 +79,7 @@ with query_tab:
 
         generated = st.form_submit_button("Generate response")
 
-        response_box = st.code()
+        response_box = st.code(response)
 
         if generated:
             

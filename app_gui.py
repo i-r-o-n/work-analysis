@@ -45,7 +45,7 @@ dataset_selection = st.selectbox(
 
 st.text_input("What would you like to know?", key="query")
 
-dataset = analyzer.parse_dataset(dataset_selection)
+dataset = parse_dataset(dataset_selection)
 # response = make_query(
 #     query=st.session_state.query,
 #     dataset=dataset,

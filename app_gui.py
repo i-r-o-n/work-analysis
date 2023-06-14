@@ -83,7 +83,7 @@ with query_tab:
 
         if generated:
             
-            response_box = st.text(wait_info)
+            response_box.text(wait_info)
             
             response_passed = Value("str","")
 

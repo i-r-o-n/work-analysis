@@ -1,3 +1,5 @@
+import streamlit as st
+
 from typing import NewType, Self
 
 from analyzer import Dataset, Model

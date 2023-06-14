@@ -1,11 +1,13 @@
 import math
 import random
 import time
+import pandas as pd
 
 import streamlit as st
 
-from utils.text_analyzer import Dataset, Defaults, make_queryt
-from utils.file_manager import write_output, Entry
+from utils.data_types import Dataset 
+from utils.text_analyzer import Defaults, make_query
+from utils.file_manager import write_output, Entry, OUTPUT_FILE
 
 
 # def temperature_sanitizer(temperature: str) -> float:
@@ -21,73 +23,86 @@ from utils.file_manager import write_output, Entry
     
 
 
-# creativity/temperature scale slider
-    # add question mark info popup explaining that, 
-    # how strictly you want the model to adhere to the query
-# don't do model picker, just use one model
-# 
+def get_scaled_temperature(temperature_selection: int) -> float:
+   return round(temperature_selection / 100, 1)
 
-st.title("School Work Showcase")
-
-st.subheader("### Creativity")
-temperature_selection = st.slider(
-    "temperature",0,100,
-    format="%",
-    value=70,
-    help="How strictly you want the model to adhere to your query")
-
-dataset_options = [
-    "all years",
-    "freshman",
-    "sophomore",
-    "junior",
-    "senior"
-]
 
 def parse_dataset(dataset_selection: str) -> Dataset:
     # [!] dataset_options order must match enum order for this to work
     return Dataset(dataset_options.index(dataset_selection))
 
-dataset_selection = st.selectbox(
-    "Which school year would you like to look at?",
-    dataset_options
-)
-
-st.text_input("What would you like to know?", key="query")
-
-dataset = parse_dataset(dataset_selection)
-# response = make_query(
-#     query=st.session_state.query,
-#     dataset=dataset,
-#     temperature=temperature_selection,
-# )
 
 def get_dummy_response() -> str:
     # wait time to simulate long query
     time.sleep(3)
     return "temporary dummy response " + str(random.randrange(1000))
 
-response = get_dummy_response()
 
-write_output(Entry(
-    dataset,
-    temperature_selection,
-    Defaults.model,
-    st.session_state.query,
-    response).parse_to_csv())
+query_tab, database_tab = st.tabs(["Query", "Database"])
 
-st.write(response)
+response = "Ask me a question..."
+accepting_responses = False
 
-'Starting a long computation...'
+with query_tab:
+    st.title("School Work Showcase")
+    st.text("A.I. Analysis of Our Writing: Query over the deliverables from the past four years \nusing a language learning model.")
 
-# Add a placeholder
-latest_iteration = st.empty()
-bar = st.progress(0)
+    with st.form("query"):
+        st.markdown("### Creativity")
+        temperature_selection = st.slider(
+            "temperature",0,100,
+            value=70,step=10,
+            help="How strictly you want the model to adhere to your query")
 
-for i in range(100):
-  # Update the progress bar with each iteration.
-  latest_iteration.text(f'Iteration {i+1}')
-  bar.progress(i + 1)
-  time.sleep(0.1)
+        st.markdown("### Data")
+        dataset_options = [
+            "all years",
+            "freshman",
+            "sophomore",
+            "junior",
+            "senior"
+        ]
+        dataset_selection = st.selectbox(
+            "Which school year would you like to look at?",
+            dataset_options)
 
-'...and now we\'re done!'
+        st.markdown("### Query")
+        st.text_input("What would you like to know?", key="query")
+
+        generated = st.form_submit_button("Generate response")
+        if generated:
+            response = get_dummy_response()
+            dataset = parse_dataset(dataset_selection)
+            if accepting_responses:
+                response = make_query(
+                    query=st.session_state.query,
+                    dataset=dataset,
+                    temperature=get_scaled_temperature(temperature_selection),
+                )
+            write_output(Entry(
+                dataset,
+                get_scaled_temperature(temperature_selection),
+                Defaults.model,
+                st.session_state.query,
+                response).parse_to_csv())
+
+        
+    st.code(response)
+
+# dataset, temperature, model_type, query, response
+df = pd.read_csv(OUTPUT_FILE)
+df = df.drop(columns=["model_type"])
+with database_tab:
+
+    st.dataframe(
+        df,
+        column_config={
+            "dataset": "Set",
+            "temperature": "Temp",
+            "query":"Query",
+            "response":"Response"
+        },
+        hide_index=True,
+        use_container_width=True
+    )
+

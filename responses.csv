@@ -1,0 +1,4 @@
+dataset,temperature,model_type,query,response
+1,0.7,map_reduce,"this","temporary dummy response 156"
+3,0.3,map_reduce,"that","temporary dummy response 842"
+2,1.0,map_reduce,"the other","temporary dummy response 963"

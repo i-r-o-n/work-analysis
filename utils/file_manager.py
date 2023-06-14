@@ -1,8 +1,8 @@
 import streamlit as st
 
-from typing import NewType, Self
+from typing import Self
 
-from utils.text_analyzer import Dataset, Model
+from utils.data_types import Dataset, Model
 
 OUTPUT_FILE = "responses.csv"
 
@@ -42,9 +42,9 @@ class Entry:
 
     def parse_to_csv(self) -> str:
         return ','.join(map(str, [
-            self.dataset.value,
+            self.dataset,
             self.temperature,
-            self.model.value,
+            self.model,
             '"' + self.query + '"',
             '"' + self.response + '"']))
 

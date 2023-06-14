@@ -1,8 +1,8 @@
 import os
 import streamlit as st
 
-from enum import Enum
-from typing import NewType
+from utils.file_manager import get_dataset_text
+from utils.data_types import Datasets, ModelTypes, Dataset, Model
 
 # load api secrets
 key = st.secrets.api_key
@@ -16,26 +16,9 @@ from langchain.chains import RetrievalQA
 
 
 
-Model = NewType("Model", str)
-class ModelTypes(Enum):
-    STUFF = Model("stuff")
-    MAP_REDUCE = Model("map_reduce")
-    REFINE = Model("refine")
-    MAP_RERANK = Model("map_rerank")
-
-
-Dataset = NewType("Dataset", int)
-class Datasets(Enum):
-    ALL = Dataset(0)
-    FRESHMAN = Dataset(1)
-    SOPHOMORE = Dataset(2)
-    JUNIOR = Dataset(3)
-    SENIOR = Dataset(4)
-
-
 class Defaults:
     temperature = 0.7,
-    model = ModelTypes.MAP_REDUCE
+    model = ModelTypes.MAP_REDUCE.value
 
 
 def make_query(
@@ -43,8 +26,6 @@ def make_query(
         dataset: Dataset = Datasets.ALL.value, 
         temperature: float = Defaults.temperature, 
         model: Model = ModelTypes.MAP_REDUCE.value) -> str:
-
-    from utils.file_manager import get_dataset_text
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]) 

@@ -6,7 +6,6 @@ from typing import NewType
 
 import file_manager
 
-
 # load api secrets
 key = st.secrets.api_key
 os.environ["OPENAI_API_KEY"] = key
@@ -57,3 +56,6 @@ def make_query(
         chain_type=model, retriever=search_index.as_retriever())
 
     return qa.run(query)
+
+
+

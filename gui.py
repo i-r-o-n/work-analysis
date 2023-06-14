@@ -4,9 +4,9 @@ import time
 
 import streamlit as st
 
-from analyzer import Defaults, make_query, Dataset
-from file_manager import write_output, Entry
-
+from utils.analyzer import Defaults, make_query, parse_dataset
+from utils.file_manager import write_output, Entry
+from utils.parser import dataset_options
 
 
 def temperature_sanitizer(temperature: str) -> float:
@@ -21,9 +21,7 @@ def temperature_sanitizer(temperature: str) -> float:
         return Defaults.temperature
     
 
-def parse_dataset(dataset_selection: str) -> Dataset:
-    # [!] dataset_options order must match enum order for this to work
-    return Dataset(dataset_options.index(dataset_selection))
+
 # creativity/temperature scale slider
     # add question mark info popup explaining that, 
     # how strictly you want the model to adhere to the query
@@ -39,13 +37,7 @@ temperature_selection = st.slider(
     value=70,
     help="How strictly you want the model to adhere to your query")
 
-dataset_options = [
-    "all years",
-    "freshman",
-    "sophomore",
-    "junior",
-    "senior"
-]
+
 dataset_selection = st.selectbox(
     "Which school year would you like to look at?",
     dataset_options
@@ -53,7 +45,7 @@ dataset_selection = st.selectbox(
 
 st.text_input("What would you like to know?", key="query")
 
-dataset = parse_dataset(dataset_selection)
+dataset = analyzer.parse_dataset(dataset_selection)
 # response = make_query(
 #     query=st.session_state.query,
 #     dataset=dataset,

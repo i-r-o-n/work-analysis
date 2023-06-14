@@ -2,6 +2,7 @@ from typing import NewType, Self
 
 from analyzer import Datasets, ModelTypes, Dataset, Model
 
+OUTPUT_FILE = "responses.csv"
 
 # file imports
 with open("data/1.txt") as file1:
@@ -45,11 +46,9 @@ class Entry:
             '"' + self.query + '"',
             '"' + self.response + '"']))
 
-print(Entry(Datasets.ALL, 1.0, ModelTypes.MAP_REDUCE, "test query?", "test response.").parse_to_csv())
-
 
 def write_output(content: str) -> str:
-    output_file = open("test.txt",'a')
+    output_file = open(OUTPUT_FILE,'a')
     output_file.write(content + "\n")
     output_file.close()
     return content

@@ -2,8 +2,8 @@ import math
 import random
 import time
 import pandas as pd
-
 import streamlit as st
+from mutliprocessing import Process
 
 from utils.data_types import Dataset 
 from utils.text_analyzer import Defaults, make_query
@@ -32,16 +32,22 @@ def parse_dataset(dataset_selection: str) -> Dataset:
     return Dataset(dataset_options.index(dataset_selection))
 
 
-def get_dummy_response() -> str:
+def get_dummy_response(response: str) -> str:
     # wait time to simulate long query
     time.sleep(3)
-    return "temporary dummy response " + str(random.randrange(1000))
+    response = "temporary dummy response " + str(random.randrange(1000))
+    return response
+
+def do_wait_info_dots(current_wait_info: str) -> str:
+    time.sleep(1)
+    return current_wait_info += '.'
+
 
 
 query_tab, database_tab = st.tabs(["Query", "Database"])
 
 response = "Ask me a question..."
-thinking = False
+wait_info = "Thinking"
 accepting_responses = False
 
 with query_tab:
@@ -72,10 +78,15 @@ with query_tab:
 
         generated = st.form_submit_button("Generate response")
         if generated:
-            thinking = True
-            if thinking: st.write("Thinking...")
-            response = get_dummy_response()
-            thinking = False
+            
+            thinking = st.empty()
+    
+            response_process = Process(target=get_dummy_response, args=(response,))
+            response_process.start()
+            while response_process.is_alive():
+                wait_info = do_wait_info_dots(wait_info)
+            #response_process.join()
+            
             dataset = parse_dataset(dataset_selection)
             if accepting_responses:
                 response = make_query(

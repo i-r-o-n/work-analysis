@@ -23,3 +23,6 @@ def temperature_sanitizer(temperature: str) -> float:
     # how strictly you want the model to adhere to the query
 # don't do model picker, just use one model
 # 
+"test"
+st.write("School Work Showcase")
+

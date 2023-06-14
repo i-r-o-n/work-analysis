@@ -3,7 +3,7 @@ import random
 import time
 import pandas as pd
 import streamlit as st
-from multiprocessing import Process
+from multiprocessing import Process, Value
 
 from utils.data_types import Dataset 
 from utils.text_analyzer import Defaults, make_query
@@ -35,8 +35,9 @@ def parse_dataset(dataset_selection: str) -> Dataset:
 def get_dummy_response(response: str) -> str:
     # wait time to simulate long query
     time.sleep(3)
-    response = "temporary dummy response " + str(random.randrange(1000))
+    response.value = "temporary dummy response " + str(random.randrange(1000))
     return response
+
 
 def do_wait_info_dots(current_wait_info: str) -> str:
     time.sleep(0.5)
@@ -77,17 +78,25 @@ with query_tab:
         st.text_input("What would you like to know?", key="query")
 
         generated = st.form_submit_button("Generate response")
+
+        response_box = st.code(response)
+
         if generated:
             
-            thinking = st.empty()
-    
-            response_process = Process(target=get_dummy_response, args=(response,))
+            response_box = st.code(wait_info)
+            
+            response_passed = Value("str","")
+
+            response_process = Process(target=get_dummy_response, args=(response_passed,))
             response_process.start()
             while response_process.is_alive():
                 wait_info = do_wait_info_dots(wait_info)
-                thinking.text(wait_info)
+                response_box = st.code(wait_info)
+
             response_process.join()
-            thinking.text("")
+            response = response_passed.value
+
+            response_box = st.code(response_value.value)
             
             dataset = parse_dataset(dataset_selection)
             if accepting_responses:
@@ -103,8 +112,7 @@ with query_tab:
                 st.session_state.query,
                 response).parse_to_csv())
    
-        
-    st.code(response)
+     
 
 # dataset, temperature, model_type, query, response
 df = pd.read_csv(OUTPUT_FILE)

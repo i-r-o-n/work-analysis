@@ -112,7 +112,7 @@ with query_tab:
             response_box.code(response)
             
             write_output(Entry(
-                dataset,
+                parse_dataset(dataset_selection),
                 get_scaled_temperature(temperature_selection),
                 Defaults.model,
                 st.session_state.query,

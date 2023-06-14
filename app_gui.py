@@ -97,7 +97,7 @@ with query_tab:
             response_process.join()
             response = connection[0].recv()
 
-            response_box.code(response_value.value)
+            response_box.code(response)
             
             dataset = parse_dataset(dataset_selection)
             if accepting_responses:

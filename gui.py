@@ -29,7 +29,7 @@ st.write("# School Work Showcase")
 st.write("### Creativity")
 temperature_selection = st.slider(
     "temperature",
-    format='%'
+    format='%',
     value=0.7,
     help="what does this do")
 st.write("temperature is", temperature_selection)

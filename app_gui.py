@@ -79,11 +79,11 @@ with query_tab:
 
         generated = st.form_submit_button("Generate response")
 
-        response_box = st.code(response)
+        response_box = st.code()
 
         if generated:
             
-            response_box = st.code(wait_info)
+            response_box = st.text(wait_info)
             
             response_passed = Value("str","")
 

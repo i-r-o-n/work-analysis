@@ -3,7 +3,7 @@ import random
 import time
 import pandas as pd
 import streamlit as st
-from mutliprocessing import Process
+from multiprocessing import Process
 
 from utils.data_types import Dataset 
 from utils.text_analyzer import Defaults, make_query

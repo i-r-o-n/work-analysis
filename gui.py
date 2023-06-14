@@ -4,8 +4,8 @@ import time
 
 import streamlit as st
 
-from analyzer import Defaults, make_query, Dataset
-from file_manager import write_output, Entry
+from utils.analyzer import Defaults, make_query, Dataset
+from utils.file_manager import write_output, Entry
 
 
 

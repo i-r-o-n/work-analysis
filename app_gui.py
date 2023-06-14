@@ -88,14 +88,14 @@ with query_tab:
             
             connection = Pipe()
 
-            response_process = Process(target=get_dummy_response, args=(connection,))
+            response_process = Process(target=get_dummy_response, args=(connection[1],))
             response_process.start()
             while response_process.is_alive():
                 wait_info = do_wait_info_dots(wait_info)
                 response_box.code(wait_info)
 
             response_process.join()
-            response = connection.recv()
+            response = connection[0].recv()
 
             response_box.code(response_value.value)
             

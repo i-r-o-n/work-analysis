@@ -73,6 +73,7 @@ with query_tab:
         generated = st.form_submit_button("Generate response")
         if generated:
             thinking = True
+            if thinking: st.write("Thinking...")
             response = get_dummy_response()
             thinking = False
             dataset = parse_dataset(dataset_selection)
@@ -88,8 +89,7 @@ with query_tab:
                 Defaults.model,
                 st.session_state.query,
                 response).parse_to_csv())
-    
-        if thinking: st.write("Thinking...")
+   
         
     st.code(response)
 

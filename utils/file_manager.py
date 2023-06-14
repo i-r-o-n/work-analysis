@@ -2,7 +2,7 @@ import streamlit as st
 
 from typing import NewType, Self
 
-from src.utils.text_analyzer import Dataset, Model
+from utils.text_analyzer import Dataset, Model
 
 OUTPUT_FILE = "responses.csv"
 

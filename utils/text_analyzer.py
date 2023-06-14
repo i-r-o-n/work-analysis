@@ -4,8 +4,6 @@ import streamlit as st
 from enum import Enum
 from typing import NewType
 
-from src.utils.file_manager import ge,get_dataset_text
-
 # load api secrets
 key = st.secrets.api_key
 os.environ["OPENAI_API_KEY"] = key
@@ -45,6 +43,8 @@ def make_query(
         dataset: Dataset = Datasets.ALL.value, 
         temperature: float = Defaults.temperature, 
         model: Model = ModelTypes.MAP_REDUCE.value) -> str:
+
+    from utils.file_manager import get_dataset_text
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]) 

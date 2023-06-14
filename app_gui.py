@@ -4,9 +4,8 @@ import time
 
 import streamlit as st
 
-from src.utils.text_analyzer import Defaults, make_query, parse_dataset
-from src.utils.file_manager import write_output, Entry
-from src.utils.parser import dataset_options
+from utils.text_analyzer import Dataset, Defaults, make_queryt
+from utils.file_manager import write_output, Entry
 
 
 # def temperature_sanitizer(temperature: str) -> float:
@@ -37,6 +36,17 @@ temperature_selection = st.slider(
     value=70,
     help="How strictly you want the model to adhere to your query")
 
+dataset_options = [
+    "all years",
+    "freshman",
+    "sophomore",
+    "junior",
+    "senior"
+]
+
+def parse_dataset(dataset_selection: str) -> Dataset:
+    # [!] dataset_options order must match enum order for this to work
+    return Dataset(dataset_options.index(dataset_selection))
 
 dataset_selection = st.selectbox(
     "Which school year would you like to look at?",
@@ -55,7 +65,7 @@ dataset = parse_dataset(dataset_selection)
 def get_dummy_response() -> str:
     # wait time to simulate long query
     time.sleep(3)
-    return "temporary dummy response " + random.randrange(1000)
+    return "temporary dummy response " + str(random.randrange(1000))
 
 response = get_dummy_response()
 

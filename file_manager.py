@@ -2,7 +2,7 @@ import streamlit as st
 
 from typing import NewType, Self
 
-from analyzer import Dataset, Model
+import analyzer
 
 OUTPUT_FILE = "responses.csv"
 
@@ -28,9 +28,9 @@ class Entry:
     
     def __init__(
             self, 
-            dataset: Dataset,
+            dataset: analyzer.Dataset,
             temperature: float,
-            model: Model,
+            model: analyzer.Model,
             query: str,
             response: str) -> None:
         self.dataset = dataset
@@ -56,7 +56,7 @@ def write_output(content: str) -> str:
     return content
 
 
-def get_dataset_text(dataset: Dataset) -> str:
+def get_dataset_text(dataset: analyzer.Dataset) -> str:
     match dataset:
         case 1:
             return year1

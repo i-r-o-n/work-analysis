@@ -85,6 +85,7 @@ with query_tab:
             response_process.start()
             while response_process.is_alive():
                 wait_info = do_wait_info_dots(wait_info)
+                thinking.text(wait_info)
             #response_process.join()
             
             dataset = parse_dataset(dataset_selection)

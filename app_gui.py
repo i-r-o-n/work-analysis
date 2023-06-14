@@ -32,12 +32,13 @@ def parse_dataset(dataset_selection: str) -> Dataset:
     return Dataset(dataset_options.index(dataset_selection))
 
 
-def get_dummy_response(response_pipe: Pipe) -> str:
+def get_response(response: str, response_pipe: Pipe) -> None:
+    response_pipe.send(response)
+
+def get_dummy_response() -> str:
     # wait time to simulate long query
     time.sleep(3)
-    response = "temporary dummy response " + str(random.randrange(1000))
-    response_pipe.send(response)
-    return response
+    return "temporary dummy response " + str(random.randrange(1000))
 
 
 def do_wait_info_dots(current_wait_info: str) -> str:
@@ -88,7 +89,9 @@ with query_tab:
             
             connection = Pipe()
 
-            response_process = Process(target=get_dummy_response, args=(connection[1],))
+            response_process = Process(
+                target=get_response, 
+                args=(get_dummy_response(), connection[1]))
             response_process.start()
             while response_process.is_alive():
                 wait_info = do_wait_info_dots(wait_info)

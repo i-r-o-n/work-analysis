@@ -40,7 +40,7 @@ def get_dummy_response(response: str) -> str:
 
 def do_wait_info_dots(current_wait_info: str) -> str:
     time.sleep(1)
-    return current_wait_info += '.'
+    return current_wait_info + '.'
 
 
 

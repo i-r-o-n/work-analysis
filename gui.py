@@ -24,15 +24,14 @@ def temperature_sanitizer(temperature: str) -> float:
 # don't do model picker, just use one model
 # 
 
-st.write("# School Work Showcase")
+st.markdown("# School Work Showcase")
 
 st.write("### Creativity")
 temperature_selection = st.slider(
-    "temperature",
-    format="test",
-    value=0.7,
-    help="what does this do")
-st.write("temperature is", temperature_selection)
+    "temperature",0,100,
+    format="%",
+    value=70,
+    help="How strictly you want the model to adhere to your query")
 
 dataset_options = [
     "all years",
@@ -50,3 +49,4 @@ st.text_input("What would you like to know?", key="query")
 
 st.session_state.query
 
+response =

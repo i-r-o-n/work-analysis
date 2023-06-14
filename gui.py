@@ -4,8 +4,8 @@ import time
 
 import streamlit as st
 
-from utils.analyzer import Defaults, make_query, Dataset
-from utils.file_manager import write_output, Entry
+from analyzer import Defaults, make_query, Dataset
+from file_manager import write_output, Entry
 
 
 
@@ -30,9 +30,9 @@ def parse_dataset(dataset_selection: str) -> Dataset:
 # don't do model picker, just use one model
 # 
 
-st.markdown("# School Work Showcase")
+st.title("School Work Showcase")
 
-st.write("### Creativity")
+st.subheader("### Creativity")
 temperature_selection = st.slider(
     "temperature",0,100,
     format="%",

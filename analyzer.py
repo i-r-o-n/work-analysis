@@ -4,7 +4,7 @@ import streamlit as st
 from enum import Enum
 from typing import NewType
 
-from utils.file_manager import get_dataset_text
+from file_manager import get_dataset_text
 
 
 # load api secrets

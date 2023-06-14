@@ -1,4 +1,4 @@
-from utils.analyzer import Dataset
+from utils.text_analyzer import Dataset
 
 
 dataset_options = [

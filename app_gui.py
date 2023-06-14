@@ -4,7 +4,7 @@ import time
 
 import streamlit as st
 
-from utils.analyzer import Defaults, make_query, parse_dataset
+from utils.text_analyzer import Defaults, make_query, parse_dataset
 from utils.file_manager import write_output, Entry
 from utils.parser import dataset_options
 

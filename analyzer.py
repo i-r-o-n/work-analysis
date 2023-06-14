@@ -4,8 +4,8 @@ import streamlit as st
 from enum import Enum
 from typing import NewType
 
+
 # load api secrets
-print(st.secrets.api_key)
 key = st.secrets.api_key
 os.environ["OPENAI_API_KEY"] = key
 
@@ -16,6 +16,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import RetrievalQA
 
 
+
 Model = NewType("Model", str)
 class ModelTypes(Enum):
     STUFF = Model("stuff")
@@ -24,13 +25,13 @@ class ModelTypes(Enum):
     MAP_RERANK = Model("map_rerank")
 
 
-Dataset = NewType("Dataset", str)
+Dataset = NewType("Dataset", int)
 class Datasets(Enum):
-    ALL = 0
-    FRESHMAN = 1
-    SOPHOMORE = 2
-    JUNIOR = 3
-    SENIOR = 4
+    ALL = Dataset(0)
+    FRESHMAN = Dataset(1)
+    SOPHOMORE = Dataset(2)
+    JUNIOR = Dataset(3)
+    SENIOR = Dataset(4)
 
 
 class Defaults:
@@ -49,9 +50,8 @@ def make_query(
     texts = splitter.split_text(dataset)
     embeddings = OpenAIEmbeddings()
     search_index = Chroma.from_texts(texts, embeddings)
-    # model = "text-ada-001"
     qa = RetrievalQA.from_chain_type(
-        llm=OpenAI(temperature=temperature), 
+        llm=OpenAI(model="text-ada-001", temperature=temperature), 
         chain_type=model, retriever=search_index.as_retriever())
 
     return qa.run(query)

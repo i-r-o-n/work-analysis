@@ -56,23 +56,27 @@ with query_tab:
     st.text("A.I. Analysis of Our Writing: Query over the deliverables from the past four years \nusing a language learning model.")
 
     with st.form("query"):
-        st.markdown("### Creativity")
-        temperature_selection = st.slider(
-            "temperature",0,100,
-            value=70,step=10,
-            help="How strictly you want the model to adhere to your query")
+        left_column, right_column = st.columns(2)
 
-        st.markdown("### Data")
-        dataset_options = [
-            "all years",
-            "freshman",
-            "sophomore",
-            "junior",
-            "senior"
-        ]
-        dataset_selection = st.selectbox(
-            "Which school year would you like to look at?",
-            dataset_options)
+        with left_column:
+            st.markdown("### Creativity")
+            temperature_selection = st.slider(
+                "temperature",0,100,
+                value=70,step=10,
+                help="How strictly you want the model to adhere to your query")
+            
+        with right_column:
+            st.markdown("### Data")
+            dataset_options = [
+                "all years",
+                "freshman",
+                "sophomore",
+                "junior",
+                "senior"
+            ]
+            dataset_selection = st.selectbox(
+                "Which school year would you like to look at?",
+                dataset_options)
 
         st.markdown("### Query")
         st.text_input("What would you like to know?", key="query")

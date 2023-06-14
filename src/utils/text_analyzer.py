@@ -4,7 +4,7 @@ import streamlit as st
 from enum import Enum
 from typing import NewType
 
-from utils import file_manager
+from src.utils.file_manager import ge,get_dataset_text
 
 # load api secrets
 key = st.secrets.api_key
@@ -48,7 +48,7 @@ def make_query(
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]) 
-    texts = splitter.split_text(file_manager.get_dataset_text(dataset))
+    texts = splitter.split_text(get_dataset_text(dataset))
     embeddings = OpenAIEmbeddings()
     search_index = Chroma.from_texts(texts, embeddings)
     qa = RetrievalQA.from_chain_type(

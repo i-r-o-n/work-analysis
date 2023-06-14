@@ -4,21 +4,21 @@ import time
 
 import streamlit as st
 
-from utils.text_analyzer import Defaults, make_query, parse_dataset
-from utils.file_manager import write_output, Entry
-from utils.parser import dataset_options
+from src.utils.text_analyzer import Defaults, make_query, parse_dataset
+from src.utils.file_manager import write_output, Entry
+from src.utils.parser import dataset_options
 
 
-def temperature_sanitizer(temperature: str) -> float:
-    try:
-        temperature = float(temperature)
-        # return the value scaled between zero and one
-        # return round(temperature / math.pow(10, math.floor(math.log(temperature, 10)) + 1, 2))
-        # return the value of the decimal only
-        # return round(temperature % 1.0, 2)
-        return temperature
-    except:
-        return Defaults.temperature
+# def temperature_sanitizer(temperature: str) -> float:
+#     try:
+#         temperature = float(temperature)
+#         # return the value scaled between zero and one
+#         # return round(temperature / math.pow(10, math.floor(math.log(temperature, 10)) + 1, 2))
+#         # return the value of the decimal only
+#         # return round(temperature % 1.0, 2)
+#         return temperature
+#     except:
+#         return Defaults.temperature
     
 
 

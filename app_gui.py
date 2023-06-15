@@ -57,7 +57,7 @@ query_tab, database_tab = st.tabs(["Query", "Database"])
 
 response = "Ask me a question..."
 wait_info = "Thinking"
-accepting_responses = False
+accepting_responses = True
 
 with query_tab:
     st.title("School Work Showcase")
@@ -100,15 +100,16 @@ with query_tab:
             connection = Pipe()
 
             def get_response(response_pipe: Pipe) -> None:
-                # input response function here \/
-                response_pipe.send(get_dummy_response())
-                # state check
+                # global state check (should really pass...)
                 if accepting_responses:
                     response_pipe.send(make_query(
                         query=st.session_state.query,
                         dataset=parse_dataset(dataset_selection),
                         temperature=get_scaled_temperature(temperature_selection),
                     ))
+                else:
+                    response_pipe.send(get_dummy_response())
+
 
             response_process = Process(
                 target=get_response, 

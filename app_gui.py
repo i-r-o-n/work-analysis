@@ -133,7 +133,7 @@ with query_tab:
                     
                 else:
                     response_pipe.send(get_dummy_response())
-                    success_pipe.send(True)
+                    success_pipe.send(False)
 
 
             response_process = Process(
@@ -146,7 +146,7 @@ with query_tab:
 
             response_process.join()
             response = response_connection[0].recv()
-
+            print(response)
             response_box.code(response, language="json")
            
             if success_connection[0]:

@@ -1,5 +1,6 @@
 import random
 import time
+from openai import InvalidRequestError
 from multiprocessing import Process, Pipe
 import pandas as pd
 import streamlit as st
@@ -110,39 +111,50 @@ with query_tab:
             
             response_box.code(wait_info)
             
-            connection = Pipe()
+            response_connection = Pipe()
+            success_connection = Pipe()
 
-            def get_response(response_pipe: Pipe) -> None:
+            def get_response(response_pipe: Pipe, success_pipe: Pipe) -> None:
                 # global state check (should really pass...)
                 if accepting_responses:
-                    response_pipe.send(make_query(
-                        query=st.session_state.query,
-                        dataset=parse_dataset(dataset_selection),
-                        temperature=get_scaled_temperature(temperature_selection),
-                    ))
+                    response_text = "Sorry, I can't respond to the query at this time at this time."
+                    try:
+                        response_text = make_query(
+                            query=st.session_state.query,
+                            dataset=parse_dataset(dataset_selection),
+                            temperature=get_scaled_temperature(temperature_selection),
+                        )
+                        response_pipe.send(response_text)
+                        success_pipe.send(True)
+                    except InvalidRequestError:
+                        success_pipe.send(False)
+                    
                 else:
                     response_pipe.send(get_dummy_response())
+                    success_pipe.send(True)
 
 
             response_process = Process(
                 target=get_response, 
-                args=(connection[1],))
+                args=(response_connection[1],success_connection[1]))
             response_process.start()
             while response_process.is_alive():
                 wait_info = do_wait_info_dots(wait_info)
                 response_box.code(wait_info)
 
             response_process.join()
-            response = connection[0].recv()
+            response = response_connection[0].recv()
 
             response_box.code(response, language="json")
            
-            write_output(Entry(
-                parse_dataset(dataset_selection),
-                get_scaled_temperature(temperature_selection),
-                Defaults.model,
-                clean_query(st.session_state.query),
-                response).parse_to_csv())
+            if success_connection[0]:
+                write_output(Entry(
+                    parse_dataset(dataset_selection),
+                    get_scaled_temperature(temperature_selection),
+                    Defaults.model,
+                    clean_query(st.session_state.query),
+                    response
+                ).parse_to_csv())
         
    
      

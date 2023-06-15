@@ -154,12 +154,12 @@ with database_tab:
     # )
 
 
-    st.download_button(
-        "Download Responses",
-        OUTPUT_FILE, # df.to_csv(index=False).encode("utf-8"),
-        "responses.csv",
-        "text/csv",
-        "download-csv",
-        "Download this table as a csv"
-    )
+st.download_button(
+    "Download Responses",
+    OUTPUT_FILE, # df.to_csv(index=False).encode("utf-8"),
+    "responses.csv",
+    "text/csv",
+    "download-csv",
+    "Download this table as a csv"
+)
 

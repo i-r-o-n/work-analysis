@@ -59,10 +59,6 @@ response = "Ask me a question..."
 wait_info = "Thinking"
 accepting_responses = True
 
-st.code("\"text\"")
-
-st.code('"""\ntext in for and\n"""')
-
 with query_tab:
     st.title("School Work Showcase")
     st.text("A.I. Analysis of Our Writing: Query over the deliverables from the past four years \nusing a language learning model.")
@@ -126,7 +122,7 @@ with query_tab:
             response_process.join()
             response = connection[0].recv()
 
-            response_box.code(response)
+            response_box.code(response, language="json")
            
             write_output(Entry(
                 parse_dataset(dataset_selection),

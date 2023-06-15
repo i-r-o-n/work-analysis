@@ -45,8 +45,8 @@ class Entry:
             self.dataset,
             self.temperature,
             self.model,
-            '"' + self.query + '"',
-            '"' + self.response + '"']))
+            '"""' + self.query + '"""',
+            '"""' + self.response + '"""']))
 
 
 def write_output(content: str) -> str:

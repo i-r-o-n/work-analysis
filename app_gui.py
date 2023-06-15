@@ -129,7 +129,7 @@ df = pd.read_csv(OUTPUT_FILE)
 df = df.drop(columns=["model_type"])
 with database_tab:
 
-    st.dataframe(
+    st.table(
         df,
         column_config={
             "dataset": "Set",
@@ -148,6 +148,6 @@ with database_tab:
         "responses.csv",
         "text/csv",
         "download-csv",
-        "Download this table as a csv."
+        "Download this table as a csv"
     )
 

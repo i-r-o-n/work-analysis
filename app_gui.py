@@ -44,6 +44,10 @@ def do_wait_info_dots(current_wait_info: str) -> str:
     return current_wait_info + '.'
 
 
+def clean_query(query: str) -> str:
+    if query[-1] == ',':
+        return query[0:-2]
+
 
 query_tab, database_tab = st.tabs(["Query", "Database"])
 
@@ -119,7 +123,7 @@ with query_tab:
                 parse_dataset(dataset_selection),
                 get_scaled_temperature(temperature_selection),
                 Defaults.model,
-                st.session_state.query,
+                clean_query(st.session_state.query),
                 response).parse_to_csv())
    
      

@@ -1,6 +1,6 @@
-import streamlit as st
-
 from typing import Self
+
+import streamlit as st
 
 from utils.data_types import Dataset, Model
 

@@ -46,7 +46,9 @@ def do_wait_info_dots(current_wait_info: str) -> str:
 
 def clean_query(query: str) -> str:
     if query[-1] == ',':
-        return query[0:-2]
+        return query[0:-1]
+    if "\"\"" in query:
+        return query.replace("\"\"",'')
 
 
 query_tab, database_tab = st.tabs(["Query", "Database"])

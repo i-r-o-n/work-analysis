@@ -5,3 +5,4 @@ openai==0.27.8
 openapi-schema-pydantic==1.2.4
 protobuf>=4.23.2,<5
 tokenizers==0.13.3
+tiktoken>=0.4.0

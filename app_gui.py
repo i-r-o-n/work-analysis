@@ -57,7 +57,7 @@ query_tab, database_tab = st.tabs(["Query", "Database"])
 
 response = "Ask me a question..."
 wait_info = "Thinking"
-accepting_responses = True
+accepting_responses = False
 
 with query_tab:
     st.title("School Work Showcase")

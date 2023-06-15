@@ -123,18 +123,35 @@ with query_tab:
 
             response_box.code(response)
             
-            write_output(Entry(
-                parse_dataset(dataset_selection),
-                get_scaled_temperature(temperature_selection),
-                Defaults.model,
-                clean_query(st.session_state.query),
-                response).parse_to_csv())
+            # if input somehow fails to be written to csv
+            try:
+                write_output(Entry(
+                    parse_dataset(dataset_selection),
+                    get_scaled_temperature(temperature_selection),
+                    Defaults.model,
+                    clean_query(st.session_state.query),
+                    response).parse_to_csv())
+            except:
+                write_output(Entry(
+                    parse_dataset(dataset_selection),
+                    get_scaled_temperature(temperature_selection),
+                    Defaults.model,
+                    "invalid query",
+                    response).parse_to_csv())
+        
    
      
 
 # dataset, temperature, model_type, query, response
-df = pd.read_csv(OUTPUT_FILE)
-df = df.drop(columns=["model_type"])
+
+df = pd.DataFrame()
+try:
+    df = pd.read_csv(OUTPUT_FILE)
+    df = df.drop(columns=["model_type"])
+
+except:
+    pass
+
 with database_tab:
 
     st.table(df)

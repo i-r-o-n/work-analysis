@@ -59,13 +59,12 @@ response = "Ask me a question..."
 wait_info = "Thinking"
 accepting_responses = True
 
-st.code('this is a test in for and nor but', language="json")
-
 with query_tab:
     st.title("School Work Showcase")
     st.text("A.I. Analysis of Our Writing: Query over the deliverables from the past four years \nusing a language learning model.")
 
     with st.form("query"):
+        
         left_column, right_column = st.columns(2)
 
         with left_column:
@@ -89,6 +88,18 @@ with query_tab:
                 dataset_options)
 
         st.markdown("### Query")
+        with st.expander("What makes a good question?"):
+            st.write("""
+            The language model doesn't have any context aside from the text files containing
+            all of the writings from each year. 
+            So, because of this, you should ask questions in a form that inquires about 
+            ideas from the text. For example, "What is the most interesting idea in this text?"
+
+            Adding a contextual understanding to the chat model, such that you could ask,
+            "What do the DTS freshman think about Machiavelli?" is beyond the current scope
+            of this project.
+            """)
+
         st.text_input("What would you like to know?", key="query")
 
         generated = st.form_submit_button("Generate response")

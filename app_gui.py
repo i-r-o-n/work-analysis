@@ -117,17 +117,19 @@ with query_tab:
             def get_response(response_pipe: Pipe, success_pipe: Pipe) -> None:
                 # global state check (should really pass...)
                 if accepting_responses:
-                    response_text = "Sorry, I can't respond to the query at this time at this time."
                     try:
-                        response_text = make_query(
+                        response_pipe.send(make_query(
                             query=st.session_state.query,
                             dataset=parse_dataset(dataset_selection),
                             temperature=get_scaled_temperature(temperature_selection),
-                        )
-                        response_pipe.send(response_text)
+                        ))
                         success_pipe.send(True)
                     except InvalidRequestError:
+                        print("I got an invalid request!")
+                        response_pipe.send("Sorry, I can't respond to the query at this time at this time.")
                         success_pipe.send(False)
+                    except:
+                        print("I got an  error")
                     
                 else:
                     response_pipe.send(get_dummy_response())

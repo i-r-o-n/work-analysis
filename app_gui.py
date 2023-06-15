@@ -93,7 +93,7 @@ with query_tab:
 
             def get_response(response_pipe: Pipe) -> None:
                 # input response function here \/
-                response_pipe.send(get_dummy_response())
+                # response_pipe.send(get_dummy_response())
                 # state check
                 if accepting_responses:
                     response_pipe.send(make_query(
@@ -139,5 +139,15 @@ with database_tab:
         },
         hide_index=True,
         use_container_width=True
+    )
+
+
+    st.download_button(
+        "Download Responses",
+        df.to_csv(index=False).encode("utf-8"),
+        "responses.csv",
+        "text/csv",
+        "download-csv",
+        "Download this table as a csv."
     )
 

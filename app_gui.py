@@ -47,8 +47,6 @@ def do_wait_info_dots(current_wait_info: str) -> str:
 def clean_query(query: str) -> str:
     if query[-1] == ',':
         query = query[:-1]
-    if "\"\"" in query:
-        query = query.replace("\"\"",'')
 
     return bytes(query, "utf-8").decode("utf-8", "ignore")
 

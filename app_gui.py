@@ -34,7 +34,7 @@ def parse_dataset(dataset_selection: str) -> Dataset:
 
 def get_dummy_response() -> str:
     # wait time to simulate long query
-    time.sleep(3)
+    time.sleep(random.randrange(5))
     return "dummy response " + str(random.randrange(1000))
 
 
@@ -57,7 +57,7 @@ query_tab, database_tab = st.tabs(["Query", "Database"])
 
 response = "Ask me a question..."
 wait_info = "Thinking"
-accepting_responses = False
+accepting_responses = True
 
 with query_tab:
     st.title("School Work Showcase")

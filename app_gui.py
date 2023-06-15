@@ -129,17 +129,19 @@ df = pd.read_csv(OUTPUT_FILE)
 df = df.drop(columns=["model_type"])
 with database_tab:
 
-    st.table(
-        df,
-        column_config={
-            "dataset": "Set",
-            "temperature": "Temp",
-            "query":"Query",
-            "response":"Response"
-        },
-        hide_index=True,
-        use_container_width=True
-    )
+    st.table(df)
+
+    # st.dataframe(
+    #     df,
+    #     column_config={
+    #         "dataset": "Set",
+    #         "temperature": "Temp",
+    #         "query":"Query",
+    #         "response":"Response"
+    #     },
+    #     hide_index=True,
+    #     use_container_width=True
+    # )
 
 
     st.download_button(

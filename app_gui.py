@@ -46,7 +46,7 @@ def do_wait_info_dots(current_wait_info: str) -> str:
 
 
 def clean_query(query: str) -> str:
-    if query[-1] == ',':
+    if ',' in query and query[-1] == ',':
         query = query[:-1]
     if '"' in query:
         query = query.replace('"','')
@@ -116,7 +116,7 @@ with query_tab:
 
             def get_response(response_pipe: Pipe, success_pipe: Pipe) -> None:
                 # global state check (should really pass...)
-                if accepting_responses:
+                if accepting_responses and st.session_state.query is not '':
                     try:
                         response_pipe.send(make_query(
                             query=st.session_state.query,

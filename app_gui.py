@@ -156,7 +156,7 @@ with database_tab:
 
     st.download_button(
         "Download Responses",
-        df.to_csv(index=False).encode("utf-8"),
+        OUTPUT_FILE, # df.to_csv(index=False).encode("utf-8"),
         "responses.csv",
         "text/csv",
         "download-csv",

@@ -116,7 +116,10 @@ with query_tab:
 
             def get_response(response_pipe: Pipe, success_pipe: Pipe) -> None:
                 # global state check (should really pass...)
-                if accepting_responses and st.session_state.query is not '':
+                if st.session_state.query is '':
+                    response_pipe.send("Please enter a non-empty query")
+                    success_pipe.send(False)
+                if accepting_responses:
                     try:
                         response_pipe.send(make_query(
                             query=st.session_state.query,

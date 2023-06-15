@@ -59,6 +59,10 @@ response = "Ask me a question..."
 wait_info = "Thinking"
 accepting_responses = True
 
+st.code("\"text\"")
+
+st.code('"""\ntext in for and\n"""')
+
 with query_tab:
     st.title("School Work Showcase")
     st.text("A.I. Analysis of Our Writing: Query over the deliverables from the past four years \nusing a language learning model.")

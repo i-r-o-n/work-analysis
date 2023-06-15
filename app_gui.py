@@ -93,7 +93,7 @@ with query_tab:
 
             def get_response(response_pipe: Pipe) -> None:
                 # input response function here \/
-                # response_pipe.send(get_dummy_response())
+                response_pipe.send(get_dummy_response())
                 # state check
                 if accepting_responses:
                     response_pipe.send(make_query(

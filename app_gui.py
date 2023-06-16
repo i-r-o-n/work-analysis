@@ -117,7 +117,7 @@ with query_tab:
             def get_response(response_pipe: Pipe, success_pipe: Pipe) -> None:
                 if st.session_state.query == '':
                     response_pipe.send("Please enter a non-empty query")
-                    success_pipe.send("false")
+                    success_pipe.send(False)
                 # global state check (should really pass...)
                 elif accepting_responses:
                     try:
@@ -126,11 +126,11 @@ with query_tab:
                             dataset=parse_dataset(dataset_selection),
                             temperature=get_scaled_temperature(temperature_selection),
                         ))
-                        success_pipe.send("true")
+                        success_pipe.send(True)
                     except InvalidRequestError:
                         print("I got an invalid request!")
                         response_pipe.send("Sorry, I can't respond to the query at this time at this time.")
-                        success_pipe.send("false")
+                        success_pipe.send(False)
                     except:
                         print("I got an  error")
                     
@@ -149,11 +149,12 @@ with query_tab:
 
             response_process.join()
             response = response_connection[0].recv()
-            print(str(success_connection[0]), response)
+            success = success_connection[0].recv()
+            print(str(success), response)
             
             response_box.code(response, language="json")
            
-            if success_connection[0] == "true":
+            if success == "true":
                 write_output(Entry(
                     parse_dataset(dataset_selection),
                     get_scaled_temperature(temperature_selection),

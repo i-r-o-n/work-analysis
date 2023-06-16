@@ -28,7 +28,7 @@ def make_query(
         model: Model = ModelTypes.MAP_REDUCE.value) -> str:
 
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2000, chunk_overlap=0, separators=[" ", ",", "\n"]) 
+        chunk_size=4000, chunk_overlap=0, separators=[" ", ".", ",", "\n"]) 
     texts = splitter.split_text(get_dataset_text(dataset))
     embeddings = OpenAIEmbeddings()
     search_index = Chroma.from_texts(texts, embeddings)

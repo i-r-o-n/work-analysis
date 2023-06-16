@@ -73,7 +73,7 @@ with query_tab:
             temperature_selection = st.slider(
                 "temperature",0,100,
                 value=70,step=10,
-                help="How strictly you want the model to adhere to your query")
+                help="How strictly you want the model to adhere to your query\nHigher values are more creative")
             
         with right_column:
             st.markdown("### Data")

@@ -18,7 +18,7 @@ from langchain.chains import RetrievalQA
 
 class Defaults:
     temperature = 0.7,
-    model = ModelTypes.REFINE.value
+    model = ModelTypes.MAP_REDUCE.value
 
 
 def make_query(
@@ -28,7 +28,7 @@ def make_query(
         model: Model = ModelTypes.MAP_REDUCE.value) -> str:
 
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000, chunk_overlap=0, separators=[" ", ",", "\n"]) 
+        chunk_size=4000, chunk_overlap=0, separators=[" ", ",", "\n"]) 
     texts = splitter.split_text(get_dataset_text(dataset))
     embeddings = OpenAIEmbeddings()
     search_index = Chroma.from_texts(texts, embeddings)

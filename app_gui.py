@@ -121,19 +121,24 @@ with query_tab:
                     success_pipe.send(False)
                 # global state check (should really pass...)
                 elif accepting_responses:
-                    try:
-                        response_pipe.send(make_query(
-                            query=st.session_state.query,
-                            dataset=parse_dataset(dataset_selection),
-                            temperature=get_scaled_temperature(temperature_selection),
-                        ))
-                        success_pipe.send(True)
-                    except InvalidRequestError as ire:
-                        print("I got an invalid request!", ire)
-                        response_pipe.send("Sorry, I can't respond to that query at this time at this time.")
-                        success_pipe.send(False)
-                    except:
-                        print("I got an  error")
+                    response_pipe.send(make_query(
+                        query=st.session_state.query,
+                        dataset=parse_dataset(dataset_selection),
+                        temperature=get_scaled_temperature(temperature_selection),
+                    ))
+                    # try:
+                    #     response_pipe.send(make_query(
+                    #         query=st.session_state.query,
+                    #         dataset=parse_dataset(dataset_selection),
+                    #         temperature=get_scaled_temperature(temperature_selection),
+                    #     ))
+                    #     success_pipe.send(True)
+                    # except InvalidRequestError as ire:
+                    #     print("I got an invalid request!", ire)
+                    #     response_pipe.send("Sorry, I can't respond to that query at this time at this time.")
+                    #     success_pipe.send(False)
+                    # except:
+                    #     print("I got an  error")
                     
                 else:
                     response_pipe.send(get_dummy_response())

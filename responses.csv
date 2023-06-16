@@ -1,5 +1,5 @@
-dataset,temperature,query,response
-1, ,What was the most interesting idea in this text?,The most interesting idea from this text is that language has the power to neutralize violence or start violence.
+dataset,temperature,model_type,query,response
+1, , ,What was the most interesting idea in this text?,The most interesting idea from this text is that language has the power to neutralize violence or start violence.
 1, , ,"Christianity adapted to its environment by changing its physical practices to a more metaphorical and spiritual practice, allowing it to spread more quickly."
 2, , ,The most interesting idea in this text is that showing can lead to a more captivating story since it requires readers to engage their brains and pick up on the hinted nuances.
 3,,What was the most complex idea in this text?,I don't know.
@@ -14,11 +14,11 @@ dataset,temperature,query,response
 0,,how does the quality of the language in this text evolve over time?,"The sentence structure and syntax of the text become more complex at the bottom of the file, with longer sentences and more clauses. Vocabulary also becomes more varied. There is less repetition of words and more sophisticated descriptions and detail. The writing also transitions from a description of a scene to narration of a quest."
 0,,what would the author of the end of the file say to the author of the beginning?,"You need to be careful and honest when you share your stories. Embellishing makes them more entertaining, but false stories can easily leave you in a difficult situation. Watch yourself and make sure you can back up your claims with evidence."
 0,,what is the most profound assertion made in this text?,"""Be peaceful when engaging in war, in order that, by subduing those whom you are fighting against, you might lead them to the benefits of peace."" (Augustine as qtd. in Aquinas)."
-1,0.3,What is the sexiest question?,"
+1,0.3,,What is the sexiest question?,"
 The best way to make money is by selling products and services."
-1,1.0,What is the sexiest question?,"
+1,1.0,,What is the sexiest question?,"
 No Waiver. Failure or delay in exercising any right or remedy under this Agreement shall not constitute a waiver of such (or any other)  right or remedy."
-1,0.6,What is the meanest idea in this text?,"
+1,0.6,,What is the meanest idea in this text?,"
 The meanest idea in this text is the idea that large brains are advantages."
-0,0.9,What is the meanest idea in this text?,"
+0,0.9,,What is the meanest idea in this text?,"
 You can't call talent to slay fellow-citizens, to deceive friends, to be without faith, to be without religion; such methods may gain empire, but not glory."

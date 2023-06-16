@@ -141,7 +141,7 @@ with query_tab:
 
             response_process = Process(
                 target=get_response, 
-                args=(response_connection[1],success_connection[1],))
+                args=(response_connection[1],success_connection[1]))
             response_process.start()
             while response_process.is_alive():
                 wait_info = do_wait_info_dots(wait_info)

@@ -33,7 +33,7 @@ def make_query(
     embeddings = OpenAIEmbeddings()
     search_index = Chroma.from_texts(texts, embeddings)
     qa = RetrievalQA.from_chain_type(
-        llm=OpenAI(model="text-ada-001", temperature=temperature), 
+        llm=OpenAI(temperature=temperature), 
         chain_type=model, retriever=search_index.as_retriever())
 
     return qa.run(query)

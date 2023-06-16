@@ -115,10 +115,10 @@ with query_tab:
             success_connection = Pipe()
 
             def get_response(response_pipe: Pipe, success_pipe: Pipe) -> None:
-                # global state check (should really pass...)
                 if st.session_state.query == '':
                     response_pipe.send("Please enter a non-empty query")
                     success_pipe.send(False)
+                # global state check (should really pass...)
                 elif accepting_responses:
                     try:
                         response_pipe.send(make_query(
@@ -149,7 +149,8 @@ with query_tab:
 
             response_process.join()
             response = response_connection[0].recv()
-            print(response)
+            print(str(success_connection[0]), response)
+            
             response_box.code(response, language="json")
            
             if success_connection[0]:
@@ -170,7 +171,7 @@ df = df.drop(columns=["model_type"])
 
 with database_tab:
 
-    st.table(df)
+    st.table(df.iloc[::-1])
 
     # st.dataframe(
     #     df,

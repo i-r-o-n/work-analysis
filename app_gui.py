@@ -130,7 +130,7 @@ with query_tab:
                         success_pipe.send(True)
                     except InvalidRequestError as ire:
                         print("I got an invalid request!", ire)
-                        response_pipe.send("Sorry, I can't respond to the query at this time at this time.")
+                        response_pipe.send("Sorry, I can't respond to that query at this time at this time.")
                         success_pipe.send(False)
                     except:
                         print("I got an  error")
@@ -155,7 +155,7 @@ with query_tab:
             
             response_box.code(response, language="json")
            
-            if success == True:
+            if success is True:
                 write_output(Entry(
                     parse_dataset(dataset_selection),
                     get_scaled_temperature(temperature_selection),
